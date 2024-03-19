@@ -1,0 +1,45 @@
+version: '3.0'
+
+volumes:
+  mongodb:
+
+services:
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    env_file: ./.env
+    logging: 
+      driver: none
+    environment:
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+    ports:
+      - '27012:27017'
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - sunday-school-reg-network
+
+  app:
+    depends_on:
+      - mongo
+    restart: always
+    # links:
+      # - redis
+    environment:
+      - REDIS_URL=redis://cache 
+    build:
+      context: ./
+    command: npm start
+    container_name: sunday-school-reg
+    networks:
+      - sunday-school-reg-network
+    volumes:
+      - ./:/sunday-school-reg
+      - /sunday-school-reg/node_modules
+    ports:
+      - "8989:8989"
+
+networks:
+  sunday-school-reg-network:
+    external: true 

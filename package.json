@@ -1,0 +1,39 @@
+{
+  "name": "sunday-school-reg",
+  "version": "1.0.0",
+  "description": "fresbhat sunday school registration system",
+  "main": "index.js",
+  "scripts": {
+    "develop": "nodemon index.js",
+    "start": "nodemon -L"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/Elijah_yalew/sunday-school-reg.git"
+  },
+  "author": "Elijah Yalew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Elijah_yalew/sunday-school-reg/issues"
+  },
+  "homepage": "https://gitlab.com/Elijah_yalew/sunday-school-reg#readme",
+  "dependencies": {
+    "async": "^3.2.5",
+    "axios": "^1.6.5",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "moment": "^2.30.1",
+    "mongoose": "^6.12.5",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.22",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}
