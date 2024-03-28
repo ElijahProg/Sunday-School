@@ -22,6 +22,31 @@
                 </div>
 
                 <div class="clearfix"></div>
+                <div class="modal fade bs-example-modal-lg-remove" tabindex="-1" role="dialog" aria-hidden="true" >
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header danger">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                                <h4 class="modal-title danger" id="modal-label">Remove Grade <i class="fa fa-trash"></i></h4>
+                                <div class="modal-body">
+                                    <form action="/setting/grade-remove" method="post">
+                                        <input type="hidden" name="id" id="removeId" />
+                                        <h3 class="danger">Are you sure you want to remove the specific Grade with it's subjects?</h3>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <div class="col-md-6 pull-right col-sm-6 col-xs-12 col-md-offset-3">
+                                                <button class="btn btn-primary" data-dismiss="modal" type="button">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Yes, Remove</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -30,12 +55,12 @@
                                 <button type="button" class="close" data-dismiss="modal"><span
                                         aria-hidden="true">×</span>
                                 </button>
-                                <h4 class="modal-title" id="myModalLabel">Add Grade</h4>
+                                <h4 class="modal-title" id="myModalLabel">Grade Management</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="demo-form2" method="post" action="/setting/grade-add" data-parsley-validate
                                     class="form-horizontal form-label-left">
-
+                                    <input type="hidden" id="id" name="id" />
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Grade
                                             Name <span class="required">*</span>
@@ -154,8 +179,8 @@
                                                     </td>
                                                     <td>
                                                         <%= grades[i].subjects.length %>
-                                                            </td>
-                                                            <td>
+                                                    </td>
+                                                    <td>
                                                         <%= grades[i].createdAt %>
                                                     </td>
                                                     <td>
@@ -166,12 +191,17 @@
                                                                     class="fa fa-list"></i> <span class="caret"></span>
                                                             </button>
                                                             <ul role="menu" class="dropdown-menu">
-                                                                <li><a href="#"><i class="fa fa-edit"></i>Edit</a>
+                                                                <li><a href="#" data-toggle="modal"
+                                                                        onclick="assignForEdit('<%= grades[i]._id %>','<%= grades[i].name %>','<%= grades[i].minAge %>','<%= grades[i].maxAge %>','<%= grades[i].level %>')"
+                                                                        data-target=".bs-example-modal-lg"><i
+                                                                            class="fa fa-edit"></i>Edit</a>
                                                                 </li>
-                                                                <li><a href="#"><i class="fa fa-trash"></i>Remove</a>
+                                                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg-remove" onclick="assignRemoval('<%= grades[i]._id %>')"><i class="fa fa-trash"></i>Remove</a>
                                                                 </li>
                                                                 <li class="divider"></li>
-                                                                <li><a href="/setting/subject-list?id=<%= grades[i]._id %>"><i class="fa fa-th"></i>Subject
+                                                                <li><a
+                                                                        href="/setting/subject-list?id=<%= grades[i]._id %>"><i
+                                                                            class="fa fa-th"></i>Subject
                                                                         Detail</a>
                                                                 </li>
                                                             </ul>
@@ -187,5 +217,28 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            function assignForEdit(id, name, minAge, maxAge,level) {
+                document.getElementById("id").value = id
+                document.getElementById("first-name").value = name
+                document.getElementById("minAge").value = minAge
+                document.getElementById("maxAge").value = maxAge
+
+                var objSelect = document.getElementById("level");
+                setSelectedValue(objSelect, level);
+
+            }
+            function setSelectedValue(selectObj, valueToSet) {
+                for (var i = 0; i < selectObj.options.length; i++) {
+                    if (selectObj.options[i].text == valueToSet) {
+                        selectObj.options[i].selected = true;
+                        return;
+                    }
+                }
+            }
+            function assignRemoval(id){
+                document.getElementById("removeId").value = id
+            }
+        </script>
         <!-- /page content -->
         <%- include('footer.ejs'); %>

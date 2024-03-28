@@ -32,12 +32,13 @@
                                 <button type="button" class="close" data-dismiss="modal"><span
                                         aria-hidden="true">×</span>
                                 </button>
-                                <h4 class="modal-title" id="myModalLabel">Add Subject</h4>
+                                <h4 class="modal-title" id="myModalLabel">Subject</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="demo-form2" method="post" action="/setting/subject-add" data-parsley-validate
                                     class="form-horizontal form-label-left">
-
+                                    <input type="hidden" name="grade" id="grdId"/>
+                                    <input type="hidden" name="subId" id="editId"/>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="hidden" value="<%= grade._id %>" name="id" id="id"
@@ -146,7 +147,8 @@
                                                                     class="fa fa-list"></i> <span class="caret"></span>
                                                             </button>
                                                             <ul role="menu" class="dropdown-menu">
-                                                                <li><a href="#"><i class="fa fa-edit"></i>Edit</a>
+                                                                <li><a href="#" data-toggle="modal" onclick="assignForEdit('<%= grade._id %>','<%= grade.subjects[i]._id %>','<%= grade.subjects[i].name %>','<%= grade.subjects[i].semester %>')"
+                                                                    data-target=".bs-example-modal-lg"><i class="fa fa-edit"></i>Edit</a>
                                                                 </li>
                                                                 <li><a href="#"><i class="fa fa-trash"></i>Remove</a>
                                                                 </li>
@@ -163,5 +165,12 @@
                 </div>
             </div>
         </div>
-        <!-- /page content -->
+        <script type="text/javascript">
+            function assignForEdit(grdId,id,name,semester){
+                document.getElementById("grdId").value = grdId
+                document.getElementById("editId").value = id
+                document.getElementById("name").value = name
+                document.getElementById("semester").value = semester
+            }
+        </script>
         <%- include('footer.ejs'); %>
